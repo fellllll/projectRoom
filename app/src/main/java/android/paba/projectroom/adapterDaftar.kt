@@ -2,15 +2,22 @@ package android.paba.projectroom
 
 import android.content.Intent
 import android.paba.projectroom.database.daftarBelanja
+import android.paba.projectroom.database.daftarBelanjaDAO
+import android.paba.projectroom.database2.historyBarang
+import android.paba.projectroom.database2.historyBarangDAO
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class adapterDaftar(private val daftarBelanja: MutableList<daftarBelanja>):
-
+class adapterDaftar(private val daftarBelanja: MutableList<daftarBelanja>,
+                    private val historyBarangDAO: historyBarangDAO):
 RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
 
     private lateinit var onItemClickCallback : OnItemClickCallback
@@ -30,6 +37,7 @@ RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
 
         var _btnEdit = itemView.findViewById<ImageButton>(R.id.btnEdit)
         var _btnDelete = itemView.findViewById<ImageButton>(R.id.btnDelete)
+        var _btnSelesai = itemView.findViewById<ImageButton>(R.id.btnSelesai)
 
     }
 
@@ -64,9 +72,37 @@ RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
         holder._btnDelete.setOnClickListener {
             onItemClickCallback.delData(daftar)
         }
+
+        holder._btnSelesai.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                // Move item to history and delete from current list
+                val historyItem = historyBarang(
+                    id = daftar.id,
+                    item = daftar.item,
+                    jumlah = daftar.jumlah,
+                    tanggal = daftar.tanggal,
+                )
+
+                // Insert into history and delete from daftar
+                historyBarangDAO.insert(historyItem)
+                historyBarangDAO.deleteFromDaftar(daftar) // Use the correct type here
+
+                withContext(Dispatchers.Main) {
+                    daftarBelanja.removeAt(holder.adapterPosition)
+                    notifyItemRemoved(holder.adapterPosition)
+                }
+            }
+        }
+
     }
 
     fun isiData(daftar: List<daftarBelanja>){
+        daftarBelanja.clear()
+        daftarBelanja.addAll(daftar)
+        notifyDataSetChanged()
+    }
+
+    fun isiDataHistory(daftar: List<daftarBelanja>){
         daftarBelanja.clear()
         daftarBelanja.addAll(daftar)
         notifyDataSetChanged()

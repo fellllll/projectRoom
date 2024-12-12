@@ -7,6 +7,16 @@
     android:layout_margin="6dp">
 
 
+    <ImageButton
+        android:id="@+id/btnSelesai"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/baseline_done_24"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
+        app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+        app:layout_constraintTop_toTopOf="@+id/btnDelete" />
+
     <TextView
         android:id="@+id/tvItem"
         android:layout_width="wrap_content"
@@ -59,4 +69,5 @@
         android:text="10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvItem" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

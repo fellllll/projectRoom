@@ -1,5 +1,6 @@
 package android.paba.projectroom
 
+import android.content.Intent
 import android.os.Bundle
 import android.paba.projectroom.database.daftarBelanja
 import android.paba.projectroom.database.daftarBelanjaDB
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import kotlin.math.tan
 
 class TambahDaftar : AppCompatActivity() {
@@ -46,7 +48,6 @@ class TambahDaftar : AppCompatActivity() {
                     )
                 )
             }
-
         }
 
         var iID : Int = 0
@@ -69,7 +70,6 @@ class TambahDaftar : AppCompatActivity() {
                 _etItem.setText(item.item)
                 _etJumlah.setText(item.jumlah)
             }
-
         }
 
         _btnUpdate.setOnClickListener {
@@ -80,8 +80,15 @@ class TambahDaftar : AppCompatActivity() {
                     isi_jumlah = _etJumlah.text.toString(),
                     pilihid = iID
                 )
+                // Switch back to the main thread
+                withContext(Dispatchers.Main) {
+                    // Close the current activity
+                    finish()
+                    // Optionally, start the main activity if necessary
+                    val intent = Intent(this@TambahDaftar, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
-
     }
 }

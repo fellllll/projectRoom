@@ -17,11 +17,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
+import android.paba.projectroom.database2.historyBarangDAO
+import android.paba.projectroom.database2.historyBarangDB
 
 class MainActivity : AppCompatActivity() {
     private lateinit var DB : daftarBelanjaDB
+    private lateinit var historyDB: historyBarangDB
     private lateinit var adapterDaftar: adapterDaftar
     private var arDaftar : MutableList<daftarBelanja> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +37,10 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        adapterDaftar = adapterDaftar(arDaftar)
+        historyDB = historyBarangDB.getDatabase(this)
+        val historyBarangDAO = historyDB.funhistoryBarangDAO()
+
+        adapterDaftar = adapterDaftar(arDaftar, historyBarangDAO)
         var _rvDaftar = findViewById<RecyclerView>(R.id.rvNotes)
 
         _rvDaftar.layoutManager = LinearLayoutManager(this)
