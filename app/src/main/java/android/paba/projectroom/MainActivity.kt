@@ -66,7 +66,9 @@ class MainActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main){
                             adapterDaftar.isiData(daftar)
                         }
+
                     }
+
                 }
             }
         )
