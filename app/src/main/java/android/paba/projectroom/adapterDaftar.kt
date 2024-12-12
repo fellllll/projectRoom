@@ -29,7 +29,7 @@ RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
         var _tvTanggal = itemView.findViewById<TextView>(R.id.tvTanggal)
 
         var _btnEdit = itemView.findViewById<ImageButton>(R.id.btnEdit)
-        var _btnDelete = itemView.findViewById<TextView>(R.id.btnDelete)
+        var _btnDelete = itemView.findViewById<ImageButton>(R.id.btnDelete)
 
     }
 
