@@ -40,6 +40,7 @@ RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
         var _btnSelesai = itemView.findViewById<ImageButton>(R.id.btnSelesai)
     }
 
+
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
     ): ListViewHolder {
