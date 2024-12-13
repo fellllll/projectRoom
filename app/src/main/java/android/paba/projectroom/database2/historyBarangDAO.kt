@@ -12,14 +12,9 @@ interface historyBarangDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(daftar: historyBarang)
 
-    @Query("SELECT * FROM daftarBelanja ORDER BY id asc")
+    @Query("SELECT * FROM historyBarang ORDER BY id asc")
     fun selectAll(): MutableList<historyBarang>
 
-    @Query("SELECT * FROM daftarBelanja WHERE id=:isi_id")
+    @Query("SELECT * FROM historyBarang WHERE id=:isi_id")
     suspend fun getItem(isi_id : Int) : historyBarang
-
-    @Delete
-    suspend fun deleteFromDaftar(daftarBarang: daftarBelanja)
-
-
 }

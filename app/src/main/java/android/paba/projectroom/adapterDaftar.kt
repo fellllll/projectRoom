@@ -85,7 +85,7 @@ RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
 
                 // Insert into history and delete from daftar
                 historyBarangDAO.insert(historyItem)
-                historyBarangDAO.deleteFromDaftar(daftar) // Use the correct type here
+                onItemClickCallback.delData(daftar)
 
                 withContext(Dispatchers.Main) {
                     daftarBelanja.removeAt(holder.adapterPosition)
