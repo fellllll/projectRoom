@@ -38,7 +38,6 @@ RecyclerView.Adapter<adapterDaftar.ListViewHolder>(){
         var _btnEdit = itemView.findViewById<ImageButton>(R.id.btnEdit)
         var _btnDelete = itemView.findViewById<ImageButton>(R.id.btnDelete)
         var _btnSelesai = itemView.findViewById<ImageButton>(R.id.btnSelesai)
-
     }
 
     override fun onCreateViewHolder(
